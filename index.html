@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Postcode Distance Calc</title>
+
+  <style>
+    .color-gray { color: gray }
+    .cursor-pointer { cursor: pointer }
+    .flex { display: flex }
+    .flex-col { flex-direction: column }
+    .font-bold { font-weight: bold }
+    .font-italic { font-style: italic }
+    .gap-3 { gap: 0.75rem }
+    .hidden { display: none }
+    .mx-3 { margin-inline: 0.75rem }
+    .my-3 { margin-block: 0.75rem }
+    .w-\[min\(50\%\,20rem\)\] {
+      width: min(50%, 20rem)
+    }
+    .w-fit { width: fit-content }
+
+    table {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    table td, table th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    table tr:nth-child(even){background-color: #f2f2f2;}
+    
+    table tr:hover {background-color: #ddd;}
+    
+    table th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #04AA6D;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Find PostCodes and Outcodes in the UK within a Certain Distance</h1>
+
+  <p>This page allows you query postcodes and outcodes within the UK, using the <a href="https://postcodes.io" target="_blank" rel="noopener noreferrer">Postcodes.io API</a></p>
+
+  <form id="query-form" class="flex flex-col gap-3 w-[min(50%,20rem)]">
+
+    <div class="flex flex-col">
+      <p class="font-bold">Select a request type</p>
+      <div>
+        <input type="radio" checked id="type-postcode" name="request_type" value="postcode">
+        <label for="type-postcode">Postcode</label>
+        <input type="radio" id="type-outcode" name="request_type" value="outcode">
+        <label for="type-outcode">Outcode</label>
+      </div>
+    </div>
+
+    <div class="flex flex-col">
+      <label for="start-location">Start Location:</label>
+      <input name="start-location" required id="start-location">
+    </div>
+  
+    <div class="flex flex-col">
+      <label for="limit">Limit:</label>
+      <input name="limit" id="limit" type="number" min="1" max="99">
+    </div>
+  
+    <div class="flex flex-col">
+      <label for="radius">Radius (m):</label>
+      <input name="radius" id="radius" type="number" min="1" max="25000">
+    </div>
+
+    <button id="submit-btn" class="my-3 w-fit" type="submit">Search</button>
+  </form>
+
+  <h2>Results:</h2>
+
+  <div id="results">
+    <p id="result-status" class="font-italic color-gray mx-3">You have not put in any query details yet.</p>
+
+    <details id="filter-container" class="hidden cursor-pointer">
+    </details>
+
+    <table id="display-table">
+      <thead id="table-head">
+      </thead>
+      <tbody id="table-body">
+      </tbody>
+    </table>
+  </div>
+
+  <script src="./index.js"></script>
+</body>
+</html>
